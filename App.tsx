@@ -1,21 +1,50 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeScreen from "./components/HomeScreen";
+import { RootStackParamList } from "./lib/types/RootStackParamList";
+import blueColor from "./lib/colors/blue";
+import { StatusBar } from "react-native";
+import TaskScreen from "./components/TaskScreen";
 
-export default function App() {
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const screenOptions = {
+  headerStyle: {
+    backgroundColor: blueColor,
+  },
+  headerTitleStyle: {
+    fontWeight: "bold" as const,
+    fontSize: 30,
+  },
+  headerTintColor: "#fff",
+};
+
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer theme={{dark: false, colors: {...DefaultTheme.colors, background: "#fff"}}}>
+      <Stack.Navigator initialRouteName="Home" >
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            title: "Tasks",
+            ...screenOptions,
+          }}
+        />
+        <Stack.Screen
+          name="Task"
+          component={TaskScreen}
+          options={{
+            title: "Edit Task",
+            ...screenOptions,
+            animation: "slide_from_right",
+          }}
+        />
+      </Stack.Navigator>
+      <StatusBar barStyle="light-content" backgroundColor={blueColor} />
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
