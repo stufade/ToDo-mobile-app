@@ -1,4 +1,4 @@
-import { makeObservable, observable } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 export type TaskType = {
   name: string;
@@ -33,17 +33,51 @@ class TasksList {
   tasks: TaskType[] = [];
 
   constructor() {
-    makeObservable(this, {
-      tasks: observable,
-    });
+    makeAutoObservable(this);
 
     this.tasks = initialState;
   }
 
   toggle(id: number) {
-    const taskToToggle = this.tasks.find(task => task.id === id);
-    if (!taskToToggle) return
-    taskToToggle.complited = !taskToToggle.complited;
+    this.tasks = this.tasks.map((task) =>
+      task.id === id ? { ...task, complited: !task.complited } : task
+    );
+  }
+
+  add(name: string) {
+    const task = {
+      name,
+      id: Math.random(),
+      complited: false,
+    };
+
+    this.tasks.push(task);
+  }
+
+  getSingleTask(id: number) {
+    return this.tasks.find((task) => task.id === id);
+  }
+
+  delete(id: number) {
+    this.tasks = this.tasks.filter((task) => task.id !== id);
+  }
+
+  get hasFinishedTasks() {
+    for (const task of this.tasks) {
+      if (task.complited) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  get finishedTasks() {
+    return this.tasks.filter((task) => task.complited);
+  }
+
+  get notFinishedTasks() {
+    return this.tasks.filter((task) => !task.complited);
   }
 }
 

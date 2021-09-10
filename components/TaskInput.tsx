@@ -4,19 +4,17 @@ import { useState } from "react";
 import { View } from "react-native";
 import { TextInput, StyleSheet } from "react-native";
 import blueColor from "../lib/colors/blue";
-import { Actions } from "./HomeScreen";
+import tasksList from "../lib/store/tasks";
 
-interface TaskInputProps {
-  dispatch: React.Dispatch<Actions>;
-}
+interface TaskInputProps {}
 
-const TaskInput: React.FC<TaskInputProps> = ({dispatch}) => {
+const TaskInput: React.FC<TaskInputProps> = () => {
   const [text, setText] = useState("");
 
   const handleSubmit = () => {
-    dispatch({type: "create", payload: {task: {name: text, complited: false, id: Math.random()}}});
+    tasksList.add(text);
     setText("");
-  }
+  };
 
   return (
     <View style={styles.container}>

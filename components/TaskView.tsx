@@ -1,36 +1,34 @@
 import React from "react";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
-import { TaskType } from "./HomeScreen";
 import blueColor from "../lib/colors/blue";
-import { Actions } from "./HomeScreen";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../lib/types/RootStackParamList";
+import tasksList, { TaskType } from "../lib/store/tasks";
+import { observer } from "mobx-react-lite";
+
 
 type TaskProps = {
   navigator: NativeStackNavigationProp<RootStackParamList, "Home">;
-  dispatch: React.Dispatch<Actions>;
+  task: TaskType;
 };
 
-const Task: React.FC<TaskType & TaskProps> = ({
-  name,
-  complited,
-  id,
-  dispatch,
-  navigator,
-}) => {
+const Task: React.FC<TaskProps> = observer(({ navigator, task }) => {
+  const { id, complited, name } = task;
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => dispatch({ type: "toggleComplite", payload: { id } })}
-      >
+      <TouchableOpacity onPress={() => tasksList.toggle(id)}>
         {complited ? (
           <AntDesign name="checkcircleo" size={28} color="white" />
         ) : (
           <Entypo name="circle" size={28} color="white" />
         )}
       </TouchableOpacity>
-      <TouchableOpacity style={{flex:1}} onPress={() => navigator.navigate("Task", {id})}>
+      <TouchableOpacity
+        style={{ flex: 1 }}
+        onPress={() => navigator.navigate("Task", { id })}
+      >
         <View>
           <Text
             style={
@@ -43,7 +41,7 @@ const Task: React.FC<TaskType & TaskProps> = ({
       </TouchableOpacity>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
