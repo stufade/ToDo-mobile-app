@@ -18,12 +18,18 @@ const screenOptions = {
     fontSize: 30,
   },
   headerTintColor: "#fff",
+  headerShadowVisible: false,
 };
 
 function App() {
   return (
-    <NavigationContainer theme={{dark: false, colors: {...DefaultTheme.colors, background: "#fff"}}}>
-      <Stack.Navigator initialRouteName="Home" >
+    <NavigationContainer
+      theme={{
+        dark: false,
+        colors: { ...DefaultTheme.colors, background: "#fff" },
+      }}
+    >
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
           name="Home"
           component={HomeScreen}

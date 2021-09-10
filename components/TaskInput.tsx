@@ -12,6 +12,7 @@ const TaskInput: React.FC<TaskInputProps> = () => {
   const [text, setText] = useState("");
 
   const handleSubmit = () => {
+    if (!text) return;
     tasksList.add(text);
     setText("");
   };

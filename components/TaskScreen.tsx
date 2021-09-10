@@ -1,6 +1,14 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  StyleSheet,
+  TextInputEndEditingEventData,
+  NativeSyntheticEvent,
+  TextInputKeyPressEventData,
+} from "react-native";
+import { TextInput } from "react-native-gesture-handler";
+import blueColor from "../lib/colors/blue";
 import tasksList from "../lib/store/tasks";
 import { RootStackParamList } from "../lib/types/RootStackParamList";
 
@@ -12,17 +20,44 @@ const TaskScreen: React.FC<TaskScreenProps> = ({ route }) => {
 
   if (!task) return null;
 
+  const [text, setText] = useState(task.name);
+
+  const handleSubmit = () => {
+    tasksList.changeText(id, text);
+  };
+
   return (
     <View style={styles.container}>
-      <Text>{task.name}</Text>
+      <View style={styles.wrapper}>
+        <TextInput
+          style={styles.change}
+          defaultValue={task.name}
+          onChangeText={(text) => setText(text)}
+          onSubmitEditing={handleSubmit}
+          multiline
+          blurOnSubmit
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    }
-})
+  container: {
+    flex: 1,
+    backgroundColor: blueColor,
+    padding: 20,
+  },
+  wrapper: {
+    borderBottomWidth: 1,
+    borderColor: "#fff",
+    padding: 0
+  },
+  change: {
+    fontSize: 22,
+    color: "#fff",
+    
+  },
+});
 
 export default TaskScreen;
