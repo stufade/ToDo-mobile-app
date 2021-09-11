@@ -1,24 +1,36 @@
+import { AntDesign } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import {
   View,
   StyleSheet,
-  TextInputEndEditingEventData,
-  NativeSyntheticEvent,
-  TextInputKeyPressEventData,
 } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import blueColor from "../lib/colors/blue";
 import tasksList from "../lib/store/tasks";
 import { RootStackParamList } from "../lib/types/RootStackParamList";
 
 type TaskScreenProps = NativeStackScreenProps<RootStackParamList, "Task">;
 
-const TaskScreen: React.FC<TaskScreenProps> = ({ route }) => {
+const TaskScreen: React.FC<TaskScreenProps> = ({ route, navigation }) => {
   const { id } = route.params;
   const task = tasksList.getSingleTask(id);
-
   if (!task) return null;
+
+  React.useLayoutEffect(() => {
+    const handleDelete = () => {
+      tasksList.delete(id);
+      navigation.goBack();
+    }
+
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity onPress={handleDelete} style={{marginRight: 20}}>
+          <AntDesign name="delete" size={30} color="#fff" />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   const [text, setText] = useState(task.name);
 

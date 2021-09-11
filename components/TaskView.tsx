@@ -7,7 +7,6 @@ import { RootStackParamList } from "../lib/types/RootStackParamList";
 import tasksList, { TaskType } from "../lib/store/tasks";
 import { observer } from "mobx-react-lite";
 
-
 type TaskProps = {
   navigator: NativeStackNavigationProp<RootStackParamList, "Home">;
   task: TaskType;
@@ -39,6 +38,11 @@ const Task: React.FC<TaskProps> = observer(({ navigator, task }) => {
           </Text>
         </View>
       </TouchableOpacity>
+      {complited && (
+        <TouchableOpacity onPress={() => tasksList.delete(id)}>
+          <AntDesign name="delete" size={24} color="#fff" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 });
