@@ -18,7 +18,7 @@ const TasksList: React.FC<TasksListProps> = observer(({ data, navigator }) => {
       data={data}
       keyExtractor={(item) => item.id.toString()}
       renderItem={(task) => (
-        <TaskView task={task.item} {...task.item} navigator={navigator} />
+        <TaskView task={task.item} navigator={navigator} />
       )}
     />
   );

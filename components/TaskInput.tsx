@@ -25,6 +25,7 @@ const TaskInput: React.FC<TaskInputProps> = () => {
         defaultValue={text}
         onChangeText={(text) => setText(text)}
         onSubmitEditing={handleSubmit}
+        selectionColor={blueColor}
       />
     </View>
   );

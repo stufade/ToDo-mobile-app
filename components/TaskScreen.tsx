@@ -46,6 +46,7 @@ const TaskScreen: React.FC<TaskScreenProps> = ({ route, navigation }) => {
           defaultValue={task.name}
           onChangeText={(text) => setText(text)}
           onSubmitEditing={handleSubmit}
+          selectionColor="#fff"
           multiline
           blurOnSubmit
         />
