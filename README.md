@@ -1,5 +1,5 @@
 # ToDo Mobile App
-![gif](https://user-images.githubusercontent.com/52926112/133311987-47193eb1-e599-474d-8d40-2f18e043d602.gif)
+![new gif](https://user-images.githubusercontent.com/52926112/133312322-3eaa1440-369c-483c-a721-0a9fc1e9aea5.gif)
 
 
 ## Technology stack:
